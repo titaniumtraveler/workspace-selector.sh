@@ -1,0 +1,10 @@
+source-path="src/"
+external-sources=true
+
+# Text: Elements in associative arrays need index
+# This doesn't apply to bash 5.1
+disable=SC2190
+
+# Text: Expressions don't expand in single quotes, use double quotes for that. 
+# I use them in printf templates a lot
+disable=SC2016
