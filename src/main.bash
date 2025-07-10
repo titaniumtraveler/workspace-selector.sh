@@ -20,7 +20,20 @@ main() {
 		action_workspace_group
 		(($2)) && action_workspace_group_register "$2"
 		;;
-	*) echo "cmd $action_list not available" ;;
+	window)
+		source src/debug.bash
+		debug_load_from_env
+
+		source src/action/util.bash
+		source src/action/window.bash
+
+		action_group_util
+		action_window_group
+		;;
+	*)
+		echo "cmd \"$action_list\" not available" >&2
+		return 1
+		;;
 	esac
 
 	# shellcheck disable=SC2034 # `input` is used as nameref
