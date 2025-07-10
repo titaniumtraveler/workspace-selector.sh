@@ -3,12 +3,9 @@
 ((hwm_util)) && return
 declare hwm_util=""
 
-hypr() {
-	local dispatcher="$1"
-	local args="${2:-""}"
-
-	local hypr_msg=""
-	if ! hypr_msg="$(hyprctl dispatch "$dispatcher" "$args")"; then
-		printf '[HYPR] %s\n' "$hypr_msg"
+niri_mgr() {
+	local ws_mgr_msg=""
+	if ! ws_mgr_msg="$(niri-workspace-manager "$@" 2>&1)"; then
+		printf '[niri-workspace-manager] %s\n' "$ws_mgr_msg"
 	fi
 }

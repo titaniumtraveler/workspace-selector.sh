@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 source src/action.bash
+source src/util.bash
 
 action_workspace_list() {
-	hypr-workspace-manager read |
+	niri-workspace-manager read |
 		jq -r -L "jq" \
 			'
 	import "workspace" as workspace;
@@ -19,21 +20,21 @@ action_workspace_group() {
 }
 
 action_callback_goto_data() {
-	hypr workspace "name:${hwm_action["workspace"]}"
+	niri_mgr goto-name "${hwm_action["workspace"]}"
 }
 
 action_callback_goto_query() {
-	hypr-workspace-manager create "${hwm_action["query"]}" >/dev/null
-	hypr workspace "name:${hwm_action["query"]}"
+	niri-workspace-manager create "${hwm_action["query"]}" >/dev/null
+	niri_mgr goto-name "${hwm_action["query"]}"
 }
 
 action_callback_moveto_data() {
-	hypr movetoworkspace "name:${hwm_action["workspace"]},activewindow"
+	niri_mgr moveto-name "${hwm_action["workspace"]}"
 }
 
 action_callback_moveto_query() {
-	hypr-workspace-manager create "${hwm_action["query"]}" >/dev/null
-	hypr movetoworkspace "name:${hwm_action["query"]},activewindow"
+	niri-workspace-manager create "${hwm_action["query"]}" >/dev/null
+	niri_mgr moveto-name "${hwm_action["query"]}"
 }
 
 action_workspace_group_register() {
@@ -44,9 +45,9 @@ action_workspace_group_register() {
 }
 
 action_callback_bind_data() {
-	hypr-workspace-manager bind "${hwm_action["workspace"]}" "${hwm_action["register"]}"
+	niri_mgr bind "${hwm_action["workspace"]}" "${hwm_action["register"]}"
 }
 
 action_callback_bind_query() {
-	hypr-workspace-manager bind "${hwm_action["query"]}" "${hwm_action["register"]}"
+	niri_mgr bind "${hwm_action["query"]}" "${hwm_action["register"]}"
 }

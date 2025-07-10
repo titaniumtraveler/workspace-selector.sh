@@ -28,8 +28,6 @@ main() {
 
 	action_parse input
 	action_run
-
-	hypr submap reset
 }
 
 main "$@"
