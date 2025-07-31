@@ -9,6 +9,9 @@ source src/debug.bash
 action_parse() {
 	local -n ref_input="$1"
 
+	debug_event "action:parse:input" &&
+		debug_println "$ref_input"
+
 	hwm_action["action"]="${ref_input%%:*}"
 	ref_input="${ref_input:${#hwm_action["action"]}+1}"
 

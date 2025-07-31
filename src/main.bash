@@ -18,7 +18,7 @@ main() {
 
 		action_group_util
 		action_workspace_group
-		(($2)) && action_workspace_group_register "$2"
+		[[ -v 2 ]] && action_workspace_group_register "$2"
 		;;
 	window)
 		source src/debug.bash

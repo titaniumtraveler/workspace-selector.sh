@@ -24,7 +24,7 @@ action_callback_goto_data() {
 }
 
 action_callback_goto_query() {
-	niri-workspace-manager create "${hwm_action["query"]}" >/dev/null
+	niri_mgr create "${hwm_action["query"]}" >/dev/null
 	niri_mgr goto-name "${hwm_action["query"]}"
 }
 
@@ -33,7 +33,7 @@ action_callback_moveto_data() {
 }
 
 action_callback_moveto_query() {
-	niri-workspace-manager create "${hwm_action["query"]}" >/dev/null
+	niri_mgr create "${hwm_action["query"]}" >/dev/null
 	niri_mgr moveto-name "${hwm_action["query"]}"
 }
 
