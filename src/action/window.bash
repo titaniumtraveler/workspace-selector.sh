@@ -5,14 +5,20 @@ source src/util.bash
 
 action_window_list() {
 	niri msg -j windows |
-		jq -r -L "jq" \
+		jq -r -L "jq" --argjson "workspaces" "$(niri msg -j workspaces)" \
 			'
 	import "fzf" as fzf;
+
+	def resolve_workspace:
+		.workspace_id | . as $id
+		| $workspaces[] 
+		| select(.id == $id)
+	;
 
 	[
 		.[]
 		| select(.is_focused | not)
-		| { "search": "\(.app_id)/\(.title)"
+		| { "search": "\(resolve_workspace.name)/\(.app_id)/\(.title)"
 			, "data":   { "window": .id } | @json
 			, "display": [] 
 		}
@@ -22,8 +28,21 @@ action_window_list() {
 }
 
 action_window_group() {
+	action_multi
+
 	action_add "goto" "enter"
 	action_add "goto" "ctrl-l"
+
+	action_add_transform "ctrl-a" \
+		'#bash
+
+			name="$(workspace-selector.sh workspace-select)"
+			echo exclude-multi
+
+			printf "%s\n" {+2} >&2
+				jq -c --arg "name" "$name" "{Action:{MoveWindowToWorkspace:{window_id:.window,reference:{Name:\$name}}}}" |
+				socat STDIO UNIX:"$NIRI_SOCKET"
+		'
 }
 
 action_callback_goto_data() {

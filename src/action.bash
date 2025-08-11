@@ -70,6 +70,11 @@ action_run_in_alacritty() {
 action_fzf_run() {
 	local list="$1"
 
+	debug_event "action:fzf" && {
+		printf '%s\n' "${hwm_action_bindings[@]}" |
+			debug_print_to
+	}
+
 	"action_${list}_list" |
 		action_run_in_alacritty \
 			fzf \
@@ -110,4 +115,15 @@ action_add() {
 		add_bind "query" "q" --fallback
 		;;
 	esac
+}
+
+action_add_transform() {
+	local key="$1"
+	local cmd="$2"
+
+	hwm_action_bindings+=("--bind=$key:transform:${cmd}")
+}
+
+action_multi() {
+	hwm_action_bindings+=("--multi")
 }

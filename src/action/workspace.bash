@@ -51,3 +51,15 @@ action_callback_bind_data() {
 action_callback_bind_query() {
 	niri_mgr bind "${hwm_action["query"]}" "${hwm_action["register"]}"
 }
+
+action_workspace_select_group() {
+	action_add "print" "enter" --fallback-query
+}
+
+action_callback_print_data() {
+	echo "${hwm_action["workspace"]}"
+}
+
+action_callback_print_query() {
+	echo "${hwm_action["query"]}"
+}

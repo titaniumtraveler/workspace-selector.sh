@@ -20,6 +20,18 @@ main() {
 		action_workspace_group
 		[[ -v 2 ]] && action_workspace_group_register "$2"
 		;;
+	workspace-select)
+		source src/debug.bash
+		debug_load_from_env
+
+		source src/action/util.bash
+		source src/action/workspace.bash
+
+		action_list="workspace"
+
+		action_group_util
+		action_workspace_select_group
+		;;
 	window)
 		source src/debug.bash
 		debug_load_from_env
