@@ -51,7 +51,7 @@ action_run_in_alacritty() {
 	exec {script}<<-BASH
 		exec 0< "/proc/$BASHPID/fd/0"
 		exec 1> "/proc/$BASHPID/fd/1"
-		# exec 2> "/proc/$BASHPID/fd/2"
+		exec 2> "/proc/$BASHPID/fd/2"
 
 		${@@Q}
 
@@ -121,7 +121,11 @@ action_add_transform() {
 	local key="$1"
 	local cmd="$2"
 
-	hwm_action_bindings+=("--bind=$key:transform:${cmd}")
+	hwm_action_bindings+=("--bind=$key:transform:
+		exec 2> \"/proc/$BASHPID/fd/2\"
+		${cmd}
+	"
+	)
 }
 
 action_multi() {

@@ -39,9 +39,10 @@ action_window_group() {
 			name="$(workspace-selector.sh workspace-select)"
 			echo exclude-multi
 
-			printf "%s\n" {+2} >&2
-				jq -c --arg "name" "$name" "{Action:{MoveWindowToWorkspace:{window_id:.window,reference:{Name:\$name}}}}" |
-				socat STDIO UNIX:"$NIRI_SOCKET"
+			printf "%s\n" {+2} |
+				jq -c --arg "name" "$name" "{Action:{MoveWindowToWorkspace:{window_id:.window,reference:{Name:\$name}, focus: false}}}" |
+				tee /proc/self/fd/2 |
+				socat STDIO UNIX:"$NIRI_SOCKET" >&2
 		'
 }
 
